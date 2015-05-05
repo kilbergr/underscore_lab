@@ -1,6 +1,7 @@
 // PUT YOUR CODE HERE!!!
 //Underscore.js by Rebecca K
 var _ = (function() {
+
 	var maxFunction = function(myArr) {
 		var maxNum = 0;
 		for (var i = 0; i < myArr.length; i++) {
@@ -10,6 +11,17 @@ var _ = (function() {
 				return maxNum;
 			}
 		};
+
+	var minFunction = function(myArr) {
+		var minNum = 0;
+		for (var i = 0; i < myArr.length; i++) {
+			if (myArray[i] < minNum) {
+				minNum = myArray[i];
+				} 
+				return minNum;
+			}
+		};
+
 
 	var lastFunction = function(myArr) {
 		return myArr[(myArr.length)-1];
@@ -64,19 +76,36 @@ So I just did a simple one below (uncommented).
 	return myArr;
 };
 
-//Also know the below doesn't work. 
-var sampleFunction = function(myArr, n) {
-        n = typeof n !== 'undefined' ?  n : 1;
-        var num = Math.floor((Math.random() * myArr.length) + 1); 
-        //create a random number
-        newArray = [];
-        for (i = num; i < myArr.length; i++) {
-        	newArray.push(myArr[num]);
-        	//within a new empty array, for i = the random generated number until i = the number of elements you want in your new array, add the element at the random number index of the original array to the new array.
-       		//I do understand that the reason this doesn't work is because it's phrased wrong. I want to take a random index from 0 to n, not from the random index to n.
-        }
-        console.log(newArray);
+
+var altShuffle = function(myArr) {
+	for(var i = 0; i < 2; i++) {
+		var rand1 = Math.floor(Math.random() * myArr.length); 
+		var rand2 = Math.floor(Math.random() * myArr.length); 
+		var temp = myArr[rand1];
+		myArr[rand2] = myArr[rand1];
+		myArr[rand1] = temp;
+	}
+	console.log(myArr);
 };
+
+
+var sampleFunction = function(myArr, n) {
+        var rand;
+        if (n) {
+        	var result = [];
+        	for ( var i = 0; i < n; i++) {
+       		 rand = Math.floor(Math.random() * myArr.length); 	
+       		 result.push(myArr[rand]);
+        	}
+          console.log(result);
+
+        }
+        else {
+        var num = Math.floor(Math.random() * myArr.length); 
+       console.log(myArr[rand]);
+  	  }
+};
+
 
 /*
 I know this doesn't work. I have thought it out though and it seems like it should. I wonder if there isn't a syntax issue.
@@ -99,16 +128,15 @@ var differenceFunction = function(myArr1, myArr2) {
 
 };
 
-	var indexFunction = function(myArr, y) {
-		for (i = 0; i < myArr.length; i++) {
-			if (myArr[i] === y) {
+	var indexFunction = function(inputArr, inputVal) {
+		for (i = 0; i < inputArr.length; i++) {
+			if (inputArr[i] === inputVal) {
 				return i;
 			}
-			else {
-				return "-1";
-			}
 		}
+		return -1;
 	};
+
 
 	var pluckFunction = function(myArr, prop) {
 		pluckArr = [];
@@ -118,9 +146,48 @@ var differenceFunction = function(myArr1, myArr2) {
 		return pluckArr;
 	};
 
+//Part II
+	var eachFunction = function(myArr, func) {
+		for (i = 0; i < myArr.length; i++) {
+			func(myArr[i]);
+		}
+	};
+
+	var compactFunction = function(myArr) {
+		for (i = 0; i < myArr.length; i++) {
+			if (myArr[i] === undefined) {
+				var compactArr = myArr.splice(i, 1);
+			}
+		}
+       	return myArr;
+	};
+
+	var mapFunction = function(myArr, func) {
+		var newArray = [];
+		for (i = 0; i < myArr.length; i++) {
+			func(myArr[i]);
+			newArray.push(myArr[i])
+			}
+		};
+
+
+
+		var filterFunction = function(myArr, func) {
+			var truthArray = [];
+			for (i = 0; i < myArr.length; i++) {
+			func(myArr[i]);{
+				if (func(myArr[i]) === true) {
+					truthArray.push(myArr[i]);
+				}
+					return truthArray;
+			}
+
+		}
+	};
 
 		return {
 			max : maxFunction,
+			min: minFunction,
 			last : lastFunction,
 			first: firstFunction,
 			contains: containsFunction,
@@ -129,7 +196,11 @@ var differenceFunction = function(myArr1, myArr2) {
 			sample: sampleFunction,
 			difference: differenceFunction,
 			indexOf: indexFunction,
-			pluck: pluckFunction;
+			pluck: pluckFunction,
+			each: eachFunction,
+			compact: compactFunction,
+			map: mapFunction,
+			filter: filterFunction
 	}
 	
 })();
